@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+      "jsx": "react",
+      "module": "commonjs",
+      "noImplicitAny": true,
+      "skipLibCheck": true,
+      "strict": true,
+      "forceConsistentCasingInFileNames": true,
+      "noEmit": true,
+      "esModuleInterop": true,
+      "outDir": "./build/",
+      "preserveConstEnums": true,
+      "removeComments": true,
+      "sourceMap": true,
+      "target": "es6",
+      "lib": ["dom", "dom.iterable", "esnext"],
+    },
+    "include": [
+      "**/*.ts", "**/*.tsx","./src/routes/pages/**/*.{js,ts,jsx,tsx}",
+    ],
+    "exclude": ["node_modules"]
+  }
+  
