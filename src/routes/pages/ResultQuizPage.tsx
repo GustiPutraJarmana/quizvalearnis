@@ -12,25 +12,25 @@ const ResultQuizPage: FC = (): ReactElement => {
     <AuthPage>
       <div className="relative flex flex-col overflow-hidden">
         <div className="flex items-center justify-center h-screen flex-col z-30 text-black bg-slate-300 bg-opacity-70">
-          <div className="flex p-10 text-2xl md:text-5xl text-center items-center justify-center">
+          <div className="flex p-4 md:p-10 text-3xl md:text-5xl text-center items-center justify-center">
             Your score: 100
           </div>
-          <div className="flex p-10 text-2xl md:text-5xl text-center items-center justify-center">
+          <div className="flex p-4 md:p-10 text-3xl md:text-5xl text-center items-center justify-center">
             Out of 100
           </div>
           <div className="flex flex-row justify-between">
             <div className="m-4">
-              <Link to="/">
-                <button className="px-10 sm:px-[150px] py-2 sm:py-3 text-xl md:text-3xl bg-red-300 text-white hover:bg-red-400 hover:text-red-200 hover:shadow-lg">
+              <Link to="/" replace>
+                <button className="px-9 md:px-[120px] py-2 md:py-3 text-xl md:text-3xl bg-red-300 text-white hover:bg-red-400 hover:text-red-200 hover:shadow-lg rounded-3xl">
                   HOME
                 </button>
               </Link>
             </div>
             <div className="m-4">
-              <Link to="/">
+              <Link to="/" replace>
                 <button
                   onClick={() => logout()}
-                  className="px-10 sm:px-[150px] py-2 sm:py-3 text-xl md:text-3xl bg-red-700 text-white hover:bg-red-white hover:bg-white hover:text-red-700 hover:shadow-lg">
+                  className="px-9 md:px-[120px] py-2 md:py-3 text-xl md:text-3xl bg-red-500 text-white hover:bg-red-700 hover:text-red-500 hover:shadow-lg rounded-3xl">
                   LOGOUT
                 </button>
               </Link>
@@ -38,7 +38,7 @@ const ResultQuizPage: FC = (): ReactElement => {
           </div>
         </div>
         <img
-          src="https://cdn.valearnis.com/vw/img/og-image.png"
+          src="https://cdn.valearnis.com/vw/img/HASS-page-web-01.webp"
           alt="valearnis"
           className="absolute z-10 w-auto min-w-full min-h-full max-w-none bg-opacity-25"
         />

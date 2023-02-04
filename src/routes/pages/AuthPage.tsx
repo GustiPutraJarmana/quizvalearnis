@@ -1,14 +1,10 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { Navigate } from "react-router-dom";
 
 const AuthPage = ({ children }: any) => {
   const checkToken = () => {
     const token = localStorage.getItem("id");
-    if (token) {
-      return true;
-    } else {
-      return false;
-    }
+    return Boolean(token);
   };
   return (
     <React.Fragment>

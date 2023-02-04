@@ -1,45 +1,42 @@
 import React, { useState } from "react";
 import AuthPage from "./AuthPage";
+import { Link } from "react-router-dom";
 
-interface Question {
+interface Iquestion {
   question: string;
   options: string[];
   answer: string;
+  checkAnswer: string;
 }
 
-const quiz: Question[] = [
-  {
-    question: "What is the capital of France?",
-    options: ["Paris", "Berlin", "London", "Madrid"],
-    answer: "Paris",
-  },
-  {
-    question: "What is the largest country by area?",
-    options: ["Russia", "China", "USA", "Canada"],
-    answer: "Russia",
-  },
-  {
-    question: "What is the tallest mountain in the world?",
-    options: ["Everest", "K2", "Kangchenjunga", "Lhotse"],
-    answer: "Everest",
-  },
-];
-
 const QuizPage: React.FC = () => {
+  const [quiz, setQuiz] = useState<Iquestion[]>([
+    {
+      question: "What is the capital of France?",
+      options: ["Paris", "Berlin", "London", "Madrid"],
+      answer: "Paris",
+      checkAnswer: "",
+    },
+    {
+      question: "What is the largest country by area?",
+      options: ["Russia", "China", "USA", "Canada"],
+      answer: "Russia",
+      checkAnswer: "",
+    },
+    {
+      question: "What is the tallest mountain in the world?",
+      options: ["Everest", "K2", "Kangchenjunga", "Lhotse"],
+      answer: "Everest",
+      checkAnswer: "",
+    },
+  ]);
+
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
-  const [score, setScore] = useState<number>(0);
-  const [showResults, setShowResults] = useState<boolean>(false);
-
   const handleAnswer = (answer: string) => {
-    if (answer === quiz[currentQuestion].answer) {
-      setScore(score + 1);
-    }
-
-    if (currentQuestion === quiz.length - 1) {
-      setShowResults(true);
-    } else {
-      setCurrentQuestion(currentQuestion + 1);
-    }
+    const storeTemp = quiz[currentQuestion];
+    storeTemp.checkAnswer = answer;
+    quiz[currentQuestion] = storeTemp;
+    setQuiz([...quiz]);
   };
 
   const handleNext = () => {
@@ -50,51 +47,70 @@ const QuizPage: React.FC = () => {
     setCurrentQuestion(currentQuestion - 1);
   };
 
+  console.log({ quiz });
+
   return (
     <AuthPage>
       <div className="relative flex flex-col overflow-hidden">
         <div className="flex items-center justify-center h-screen flex-col z-30 text-black bg-slate-500 bg-opacity-50 rounded-lg">
-          <div className="flex flex-col align-center px-6 py-9 bg-cyan-300 bg-opacity-80 border-none rounded-md cursor-pointer">
-            <div className="mb-4 text-3xl sm:text-4xl">
+          <div className="flex flex-col px-8 py-10  bg-cyan-300 bg-opacity-80 border-none rounded-md">
+            <div className="mb-4 text-xl md:text-2xl md:mb-2 shadow-black">
               Question {currentQuestion + 1} :
             </div>
-            <div className="mb-4 text-3xl md:text-4xl text-red-500">
+            <div className="mb-4 text-3xl md:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-900">
               {quiz[currentQuestion].question}
             </div>
-            <div className="flex md:flex-row flex-col justify-between">
+            <div className="flex md:flex-row flex-col justify-center md:justify-between">
               {quiz[currentQuestion].options.map((option, index) => (
-                <div className="text-center p-4">
-                  <button
-                    key={index}
-                    className="m-4 md:m-10 px-6 py-2 md:px-7 hover:text-red-500 hover:bg-black rounded-md bg-red-500 text-2xl"
-                    onClick={() => handleAnswer(option)}>
-                    {option}
-                  </button>
+                <div key={index} className="">
+                  {quiz[currentQuestion].checkAnswer === option ? (
+                    <button
+                      className="m-4 md:m-10 px-6 py-1 md:px-7 bg-red-600 ring-4 ring-red-600 rounded-2xl text-2xl"
+                      onClick={() => handleAnswer(option)}>
+                      {option}
+                    </button>
+                  ) : (
+                    <button
+                      className="m-4 md:m-10 px-6 py-1 md:px-7 bg-clip-text text-transparent bg-gradient-to-r hover:text-black hover:ring-4 hover:ring-pink-500 from-pink-500 to-violet-900 ring-4 ring-pink-600 rounded-2xl text-2xl"
+                      onClick={() => handleAnswer(option)}>
+                      {option}
+                    </button>
+                  )}
                 </div>
               ))}
             </div>
-            <div className="flex flex-row justify-center">
-              {currentQuestion !== 0 && (
-                <div className="">
-                  <button className="prev" onClick={handlePrev}>
-                    &#60;Prev
-                  </button>
-                </div>
-              )}
-              {/* {showResults && (
-              <Link to="/result">
-                  <button className="">
-                    Submit 
-                  </button>
-              </Link>
-            )} */}
-              {currentQuestion !== quiz.length - 1 && (
-                <div className="">
-                  <button className="next" onClick={handleNext}>
-                    Next&#62;
-                  </button>
-                </div>
-              )}
+            <div className="flex flex-row justify-around mt-9">
+              <div className="">
+                {currentQuestion !== 0 && (
+                  <div className="">
+                    <button
+                      className="text-2xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-900"
+                      onClick={handlePrev}>
+                      &#8678; Prev
+                    </button>
+                  </div>
+                )}
+              </div>
+              <div className="">
+                {quiz[currentQuestion].checkAnswer !== "" &&
+                  currentQuestion !== quiz.length - 1 && (
+                    <div className="">
+                      <button
+                        className="text-2xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-900"
+                        onClick={handleNext}>
+                        Next &#8680;
+                      </button>
+                    </div>
+                  )}
+                {currentQuestion === quiz.length - 1 &&
+                  quiz[currentQuestion].checkAnswer && (
+                    <Link to="/result" replace>
+                      <button className="text-2xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-900">
+                        Submit &#10004;
+                      </button>
+                    </Link>
+                  )}
+              </div>
             </div>
           </div>
         </div>

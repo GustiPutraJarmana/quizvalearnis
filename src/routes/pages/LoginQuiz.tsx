@@ -8,7 +8,7 @@ const LoginQuizPage: FC = (): ReactElement => {
       await localStorage.setItem("id", "Bare Token");
       const checkExistToken = await localStorage.getItem("id");
       if (checkExistToken) {
-        navigate("/", { replace: true });
+        navigate("/");
       } else {
         throw new Error("Something Wrong!!!");
       }
@@ -19,8 +19,8 @@ const LoginQuizPage: FC = (): ReactElement => {
   return (
     <div className="relative flex flex-col overflow-hidden">
       <div className="flex items-center justify-center h-screen flex-col z-30 text-black bg-slate-300 bg-opacity-50">
-        <form className="bg-blue-400 bg-opacity-50 shadow-md rounded sm:w-[350px] sm:h-[400px] px-10 pt-8 pb-10 mb-4">
-          <div className="flex items-center justify-center mb-5 text-xl font-bold">
+        <form className="bg-cyan-300 bg-opacity-70 shadow-md sm:w-[350px] sm:h-[400px] px-10 pt-8 pb-10 mb-4 rounded-xl">
+          <div className="flex items-center justify-center mb-7 text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-900">
             Valearniz Quiz
           </div>
           <div className="mb-4">
@@ -44,7 +44,7 @@ const LoginQuizPage: FC = (): ReactElement => {
               className="shadow appearance-none border focus:border-blue-900 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
               id="password"
               type="password"
-              placeholder="******************"
+              placeholder="*************"
             />
           </div>
           <div className="flex justify-between">
@@ -58,7 +58,7 @@ const LoginQuizPage: FC = (): ReactElement => {
                 login();
               }}
               key="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-blue-600 text-white hover:bg-blue-400 hover:text-blue-700 font-bold py-2 px-4 rounded-md"
               type="button">
               Sign In
             </button>
