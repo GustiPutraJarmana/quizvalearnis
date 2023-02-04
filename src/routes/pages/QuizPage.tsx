@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import AuthPage from "./AuthPage";
 import { Link } from "react-router-dom";
+import { useDispatch } from 'react-redux'
+import { incrementResult, countTotal, descrementResult } from '../../store'
+import { useSelector } from 'react-redux'
+import { RootState } from "../../store";
+
 
 interface Iquestion {
   question: string;
@@ -10,6 +15,7 @@ interface Iquestion {
 }
 
 const QuizPage: React.FC = () => {
+  const result = useSelector((state: RootState) => state.resultQuiz)
   const [quiz, setQuiz] = useState<Iquestion[]>([
     {
       question: "What is the capital of France?",
@@ -19,7 +25,7 @@ const QuizPage: React.FC = () => {
     },
     {
       question: "What is the largest country by area?",
-      options: ["Russia", "China", "USA", "Canada"],
+      options: ["China", "USA", "Canada", "Russia"],
       answer: "Russia",
       checkAnswer: "",
     },
@@ -27,6 +33,78 @@ const QuizPage: React.FC = () => {
       question: "What is the tallest mountain in the world?",
       options: ["Everest", "K2", "Kangchenjunga", "Lhotse"],
       answer: "Everest",
+      checkAnswer: "",
+    },
+    {
+      question: "In 1768, Captain James Cook set out to explore which ocean?",
+      options: ["Pacific Ocean", "Atlantic Ocean", "Indian Ocean", "Arctic Ocean"],
+      answer: "Pacific Ocean",
+      checkAnswer: "",
+    },
+    {
+      question: "What is actually electricity?",
+      options: ["A flow of water", "A flow of air", "A flow of atoms", "A flow of electrons"],
+      answer: "A flow of electrons",
+      checkAnswer: "",
+    },
+    {
+      question: "Which of the following is not an international organisation?",
+      options: ["FIFA", "FBI", "ASEAN", "NATO"],
+      answer: "FBI",
+      checkAnswer: "",
+    },
+    {
+      question: "What is the speed of sound?",
+      options: ["120 km/h", "1,200 km/h", "400 km/h", "700 km/h"],
+      answer: "1,200 km/h",
+      checkAnswer: "",
+    },
+    {
+      question: "What was the first country to use tanks in combat during World War I?",
+      options: ["France", "Japan", "Britain", "Germany"],
+      answer: "Britain",
+      checkAnswer: "",
+    },
+    {
+      question: "What is the main component of the sun?",
+      options: ["Liquid lava", "Gas", "Molten iron", "Rock"],
+      answer: "Gas",
+      checkAnswer: "",
+    },
+    {
+      question: "Which two months are named after Emperors of the Roman Empire?",
+      options: ["January and February", "March and April", "May and June", "July and August"],
+      answer: "July and August",
+      checkAnswer: "",
+    },
+    {
+      question: "Which of the following animals can run the fastest?",
+      options: ["Cheetah", "Leopard", "Tiger", "Lion"],
+      answer: "Cheetah",
+      checkAnswer: "",
+    },
+    {
+      question: "Which of the following actors was the first one to play James Bond?",
+      options: ["Timothy Dalton", "Roger Moore", "Sean Connery", "George Lazenby"],
+      answer: "Sean Connery",
+      checkAnswer: "",
+    },
+    {
+      question: "In which country is Transylvania?",
+      options: ["Bulgaria", "Romania", "Croatia", "Serbia"],
+      answer: "Romania",
+      checkAnswer: "",
+    },
+    {
+      question: "How many time zones are there in total in the world?",
+      options: ["8", "16", "24", "32"],
+      answer: "24",
+      checkAnswer: "",
+    },
+    {
+      question: "Neil Armstrong was the first astronaut in the world to step foot on the moon. Who was the second?",
+      options: ["Yuri Gagarin", "James Irwin", "Alan Bean", "Buzz Aldrin"],
+      answer: "Buzz Aldrin",
       checkAnswer: "",
     },
   ]);
@@ -39,15 +117,29 @@ const QuizPage: React.FC = () => {
     setQuiz([...quiz]);
   };
 
+  const dispatch = useDispatch()
+
+  const handleSubmit = () => {
+    dispatch(countTotal(quiz.length))
+    handleNext()
+  }
+
   const handleNext = () => {
     setCurrentQuestion(currentQuestion + 1);
+    const correct = quiz[currentQuestion].answer === quiz[currentQuestion].checkAnswer;
+    if (correct) {
+      dispatch(incrementResult());
+    } else if (result?.result < 0) {
+      dispatch(descrementResult());
+    }
   };
 
   const handlePrev = () => {
     setCurrentQuestion(currentQuestion - 1);
+    if (result?.result !== 0) {
+      dispatch(descrementResult());
+    }
   };
-
-  console.log({ quiz });
 
   return (
     <AuthPage>
@@ -105,7 +197,10 @@ const QuizPage: React.FC = () => {
                 {currentQuestion === quiz.length - 1 &&
                   quiz[currentQuestion].checkAnswer && (
                     <Link to="/result" replace>
-                      <button className="text-2xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-900">
+                    {/* add to totalQuestion payload here */}
+                      <button 
+                      onClick={handleSubmit}
+                      className="text-2xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-900">
                         Submit &#10004;
                       </button>
                     </Link>

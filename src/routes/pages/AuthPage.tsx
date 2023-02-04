@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { Navigate } from "react-router-dom";
 
 const AuthPage = ({ children }: any) => {

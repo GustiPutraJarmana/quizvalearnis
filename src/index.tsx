@@ -4,6 +4,8 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import AppRouter from "./router/AppRouter";
 import { BrowserRouter } from "react-router-dom";
+import { store } from "../src/store/store";
+import { Provider } from "react-redux";
 
 interface HTMLInputElement extends HTMLElement {
   value?: string;
@@ -14,9 +16,11 @@ const root = createRoot(value);
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <AppRouter />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <AppRouter />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
 

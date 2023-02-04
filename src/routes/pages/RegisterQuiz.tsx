@@ -1,9 +1,6 @@
 import React, { FC, ReactElement } from "react";
 
 const RegisterQuizPage: FC = (): ReactElement => {
-  // const onSubmit = (e: any) => {
-  //   console.log({ e });
-  // };
   return (
     <div className="relative flex flex-col overflow-hidden">
       <div className="flex items-center justify-center h-screen flex-col z-30 text-black bg-slate-300 bg-opacity-50">
